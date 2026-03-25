@@ -1,3 +1,4 @@
+```mermaid
 flowchart TB
     classDef k8s fill:#326ce5,stroke:#fff,stroke-width:2px,color:#fff,rx:5px,ry:5px;
     classDef agent fill:#f5f5dc,stroke:#333,stroke-width:2px,rx:5px,ry:5px;
