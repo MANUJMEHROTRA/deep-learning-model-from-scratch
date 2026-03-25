@@ -6,27 +6,27 @@ flowchart TB
     classDef obs fill:#e6e6fa,stroke:#333,stroke-width:2px,rx:5px,ry:5px;
     classDef tool fill:#d1e8e2,stroke:#333,stroke-width:2px,rx:5px,ry:5px;
 
-    User((User / Client))
+    User(("User / Client"))
 
     subgraph Kubernetes_Cluster [Kubernetes Cluster]
         direction TB
-        Ingress[Ingress Controller\nLoad Balancer]:::k8s
+        Ingress["Ingress Controller\nLoad Balancer"]:::k8s
 
         subgraph App_Tier [FastAPI + Agent Tier Auto-Scaled via HPA]
             direction LR
-            Pod1[FastAPI App Pod 1\n+ LangGraph Worker]
-            Pod2[FastAPI App Pod 2\n+ LangGraph Worker]
-            PodN[FastAPI App Pod N\n...]
+            Pod1["FastAPI App Pod 1\n+ LangGraph Worker"]
+            Pod2["FastAPI App Pod 2\n+ LangGraph Worker"]
+            PodN["FastAPI App Pod N\n..."]
         end
 
         subgraph State_Tier [State & Memory Tier]
-            Redis[(Redis Cluster\nCheckpointer & Cache)]:::db
+            Redis[("Redis Cluster\nCheckpointer & Cache")]:::db
         end
 
         subgraph Observability_Stack [Observability & Monitoring]
-            OTel[OpenTelemetry\nCollector]:::obs
-            Prom[Prometheus]:::obs
-            Grafana[Grafana]:::obs
+            OTel["OpenTelemetry\nCollector"]:::obs
+            Prom["Prometheus"]:::obs
+            Grafana["Grafana"]:::obs
             
             OTel --> Prom --> Grafana
         end
@@ -38,19 +38,19 @@ flowchart TB
 
     subgraph Agentic_Workflow [LangGraph Core Logic]
         direction TB
-        Graph[LangGraph StateGraph\n(Nodes & Edges)]:::agent
-        LLM[LLM Provider\n(OpenAI/Gemini/Anthropic)]:::agent
-        MCPClient[MCP Client]:::agent
+        Graph["LangGraph StateGraph\n(Nodes & Edges)"]:::agent
+        LLM["LLM Provider\n(OpenAI/Gemini/Anthropic)"]:::agent
+        MCPClient["MCP Client"]:::agent
 
-        Graph <-->|Prompts & Generation| LLM
-        Graph <-->|Tool Execution Requests| MCPClient
+        Graph <-->|"Prompts & Generation"| LLM
+        Graph <-->|"Tool Execution Requests"| MCPClient
     end
 
     subgraph External_Tools [MCP Servers & Tools]
-        MCPS1[MCP Server 1\n(Internal Data)]:::tool
-        MCPS2[MCP Server 2\n(Web APIs)]:::tool
-        Tool1[(Vector DB / RAG)]:::tool
-        Tool2[Web Scraper / API]:::tool
+        MCPS1["MCP Server 1\n(Internal Data)"]:::tool
+        MCPS2["MCP Server 2\n(Web APIs)"]:::tool
+        Tool1[("Vector DB / RAG")]:::tool
+        Tool2["Web Scraper / API"]:::tool
 
         MCPS1 --> Tool1
         MCPS2 --> Tool2
@@ -59,5 +59,6 @@ flowchart TB
     %% Connections linking the conceptual blocks
     User -- "Sends Query" --> Ingress
     Pod1 -. "Executes" .-> Agentic_Workflow
-    MCPClient <-->|Model Context Protocol| MCPS1
+    MCPClient <-->|"Model Context Protocol"| MCPS1
+    MCPClient <-->|"Model Context Protocol"| MCPS2Model Context Protocol| MCPS1
     MCPClient <-->|Model Context Protocol| MCPS2
