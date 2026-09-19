@@ -64,6 +64,8 @@ class BilingualDataset(Dataset):
             "encoder_mask": (encoder_input!=self.PAD).unsqueeze(0).unsqueeze(0).int(),
             "decoder_mask": (decoder_input!=self.PAD).unsqueeze(0).unsqueeze(0).int() & causal_mask(decoder_input.size(0)),
             "label": label,
+            "src_text": source_sent,
+            "tgt_text": tgt_sent,
 
         }
 
