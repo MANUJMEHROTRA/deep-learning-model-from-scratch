@@ -200,7 +200,7 @@ class Transformer(nn.Module):
         return self.proj(x)
 
 
-def build_transform(input_vocab_size: float, output_vocab_size: float, input_seq_len: int=512, head:int=12, output_seq_len: int=512,  N: int = 6, ffn_size: int=2048, dropout: float=0.1, d_model = 768):
+def build_transform(input_vocab_size: float, output_vocab_size: float, input_seq_len: int=512, head:int=12, output_seq_len: int=512,  N: int = 3, ffn_size: int=2048, dropout: float=0.1, d_model = 768):
 
     input_embedding = InputEmbedding(d_model,input_vocab_size)
     output_embedding = InputEmbedding(d_model,output_vocab_size)
