@@ -100,7 +100,7 @@ def train_model():
         model.train()
         loss = 0
         batch_iterator = tqdm(train_dataloader,desc=f"Processing epoc: {epoch:02d}")
-        for idx,batch in enumerate(train_dataloader):
+        for idx,batch in enumerate(batch_iterator):
             encoder_input = batch["encoder_input"].to(device)
             decoder_input = batch["decoder_input"].to(device)
             encoder_mask = batch["encoder_mask"].to(device)
