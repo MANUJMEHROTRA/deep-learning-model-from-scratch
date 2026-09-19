@@ -1,3 +1,4 @@
+import os
 import torch
 import torch.nn as nn
 from pathlib import Path
@@ -173,7 +174,7 @@ def train_model():
     model.to(device)
     
     optimizer = torch.optim.Adam(model.parameters(),lr=0.0001)
-    loss_fn = nn.CrossEntropyLoss(ignore_index=tokenizer_src.token_to_id("[SOS]"),label_smoothing=0.1)
+    loss_fn = nn.CrossEntropyLoss(ignore_index=tokenizer_tgt.token_to_id("[PAD]"), label_smoothing=0.1)
     writer = SummaryWriter(config["experiment_name"])
 
     intial_epoch = 0
